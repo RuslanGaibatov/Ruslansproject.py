@@ -1,0 +1,4 @@
+  def save_orders(self):
+        with open(self.orders_file, 'w') as f:
+            for order in self.orders:
+                f.write(f"{order['user_id']};{','.join(order['items'])};{order['status']}\n")

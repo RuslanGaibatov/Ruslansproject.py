@@ -1,0 +1,3 @@
+    def remove_item_from_menu(self, name):
+        self.menu = [item for item in self.menu if item['name'] != name]
+        self.save_menu()

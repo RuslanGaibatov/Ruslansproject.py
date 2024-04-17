@@ -1,0 +1,3 @@
+    def cancel_order(self, user_id, items):
+        self.orders = [order for order in self.orders if order['user_id'] != user_id and order['items'] != items]
+        self.save_orders()

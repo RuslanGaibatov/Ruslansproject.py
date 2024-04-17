@@ -115,3 +115,68 @@ class TaskManager:
         pass
 
     def delete_task(self, project_name, task_description):
+
+
+#2
+class FoodOrderingSystem:
+    def __init__(self):
+        self.menu_file = "menu.txt"
+        self.orders_file = "orders.txt"
+        self.menu = []
+        self.orders = []
+
+        self.load_menu()
+        self.load_orders()
+
+    def load_menu(self):
+        try:
+            with open(self.menu_file, 'r') as f:
+                for line in f:
+                    name, category, price = line.strip().split(',')
+                    self.menu.append({'name': name, 'category': category, 'price': float(price)})
+        except FileNotFoundError:
+
+            self.menu = []
+
+    def load_orders(self):
+        try:
+            with open(self.orders_file, 'r') as f:
+                for line in f:
+                    user_id, items_str, status = line.strip().split(';')
+                    items = items_str.split(',')
+                    self.orders.append({'user_id': int(user_id), 'items': items, 'status': status})
+        except FileNotFoundError:
+
+            self.orders = []
+
+    def save_menu(self):
+        with open(self.menu_file, 'w') as f:
+            for item in self.menu:
+                f.write(f"{item['name']},{item['category']},{item['price']}\n")
+
+    def save_orders(self):
+        with open(self.orders_file, 'w') as f:
+            for order in self.orders:
+                f.write(f"{order['user_id']};{','.join(order['items'])};{order['status']}\n")
+
+    def add_item_to_menu(self, name, category, price):
+        self.menu.append({'name': name, 'category': category, 'price': price})
+        self.save_menu()
+
+    def remove_item_from_menu(self, name):
+        self.menu = [item for item in self.menu if item['name'] != name]
+        self.save_menu()
+
+    def place_order(self, user_id, items):
+        self.orders.append({'user_id': user_id, 'items': items, 'status': 'Pending'})
+        self.save_orders()
+
+    def cancel_order(self, user_id, items):
+        self.orders = [order for order in self.orders if order['user_id'] != user_id and order['items'] != items]
+        self.save_orders()
+
+
+if __name__ == "__main__":
+    food_ordering_system = FoodOrderingSystem()
+    print(food_ordering_system.menu)
+    print(food_ordering_system.orders)

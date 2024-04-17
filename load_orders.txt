@@ -1,0 +1,10 @@
+ def load_orders(self):
+        try:
+            with open(self.orders_file, 'r') as f:
+                for line in f:
+                    user_id, items_str, status = line.strip().split(';')
+                    items = items_str.split(',')
+                    self.orders.append({'user_id': int(user_id), 'items': items, 'status': status})
+        except FileNotFoundError:
+
+            self.orders = []

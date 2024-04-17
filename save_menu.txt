@@ -1,0 +1,4 @@
+ def save_menu(self):
+        with open(self.menu_file, 'w') as f:
+            for item in self.menu:
+                f.write(f"{item['name']},{item['category']},{item['price']}\n")
